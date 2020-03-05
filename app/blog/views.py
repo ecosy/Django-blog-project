@@ -1,26 +1,19 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import LoginForm
-from .forms import UserForm
-from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from .forms import LoginForm, UserForm, PostForm
+
+from .auth import custom_authenticate
 
 def login(request):
     if request.method == 'POST':
-        login_form = LoginForm(request.POST)
-        user_id = request.POST['user_id']
-        password = request.POST['password']
-        user = authenticate(request, user_id=user_id, password=password)
-        print("user : ", user)
+        user = custom_authenticate(request)
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse('base_post'))
+            print('yes authen!')
+            return render(request, "base_post.html", {'user':user})
+            # return HttpResponseRedirect(reverse('base_post'), context)
         else:
             return HttpResponse("Login Failed. Try again.")
-
-        # if login_form.is_valid():
-        #     return HttpResponseRedirect(reverse('base_post'))
 
     elif request.method == 'GET':
         form = LoginForm()
@@ -30,17 +23,21 @@ def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            # new_user = User.objects.create_user(**form.cleaned_data)
-            # login(request, new_user)
             form.save()
             return render(request, 'base_post.html', {})
-            # return redirect('hello')
     else:
         form = UserForm()
         return render(request, 'register.html', {'form':form})
 
 def base_post(request):
     if request.method == 'GET':
+        print('request user : ', request.user)
         return render(request, 'base_post.html', {})
 
     # elif request.method == 'POST':
+    #     form = PostForm(request.POST)
+    #
+    #     if form.is_valid():
+    #         posting = form.save(commit=False)
+    #         posting.user_id=
+    #         form.save()

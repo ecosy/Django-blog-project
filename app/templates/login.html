@@ -1,0 +1,21 @@
+<h1> Welcome to MD Blog </h1>
+
+<!--{% if form.errors %}-->
+<!--<p>Your username and password didn't match. Please try again.</p>-->
+<!--{% endif %}-->
+
+<!--{%if next%}-->
+<!--    {% if user.is_authenticated %}-->
+<!--    <p> Your account does not have access to this page. please try again. </p>-->
+<!--    {% else %}-->
+<!--    <p>please login to see this page.</p>-->
+<!--    {%endif%}-->
+<!--{%endif%}-->
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="login" />
+<!--    <input type="hidden" name="next" value="{{ next }}" />-->
+</form>
+

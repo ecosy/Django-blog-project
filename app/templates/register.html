@@ -1,6 +1,13 @@
 <h2>Sign in Page</h2>
 <form method="post" action="">
     {% csrf_token %}
-    {{ form.as_p }}
+    user id : {{ form_user.username }}
+    <br><br>
+    password : {{ form_user.password }}
+    <br><br>
+    username : {{ form_user.last_name }}
+    <br><br>
+    description : {{ form_intro.description}}
+    <br><br>
     <input type="submit" value="register" />
 </form>

@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import User
+from .models import Introduction
+from django.contrib.auth.models import User
 
 # class LoginForm(forms.Form):
 #     user_id = forms.CharField(max_length=10, help_text="your id")
@@ -17,9 +18,16 @@ from .models import User
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_id', 'password']
+        fields = ['username', 'password']
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_id', 'password', 'name', 'description']
+        fields = ['username', 'password', 'last_name']
+
+class IntroductionForm(forms.ModelForm):
+    class Meta:
+        model = Introduction
+        fields = ['description']
+
+
